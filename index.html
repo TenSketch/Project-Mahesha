@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project MAHEŚA - Preserving Ancient Knowledge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --heritage-beige: #F6E8C3;
+            --deep-brown: #3E2C00;
+            --gold: #D4AF37;
+            --black: #000000;
+        }
+        
+        .heritage-bg {
+            background: linear-gradient(135deg, #F6E8C3 0%, #E8D5A3 100%);
+        }
+        
+        .manuscript-texture {
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(62, 44, 0, 0.05) 0%, transparent 50%),
+                linear-gradient(45deg, transparent 49%, rgba(212, 175, 55, 0.03) 50%, transparent 51%);
+        }
+        
+        .gold-glow {
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .gold-glow:hover {
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .scroll-smooth {
+            scroll-behavior: smooth;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .hero-video-bg {
+            background: linear-gradient(rgba(62, 44, 0, 0.7), rgba(62, 44, 0, 0.5)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="manuscript" patternUnits="userSpaceOnUse" width="100" height="100"><rect width="100" height="100" fill="%23F6E8C3"/><path d="M10,10 Q50,30 90,10 Q50,50 10,90 Q30,50 10,10" fill="none" stroke="%23D4AF37" stroke-width="0.5" opacity="0.3"/></pattern></defs><rect width="1200" height="800" fill="url(%23manuscript)"/><g opacity="0.1"><circle cx="200" cy="150" r="80" fill="%23D4AF37"/><circle cx="800" cy="300" r="60" fill="%23D4AF37"/><circle cx="400" cy="600" r="100" fill="%23D4AF37"/></g></svg>');
+            background-size: cover;
+            background-position: center;
+            animation: subtle-float 20s ease-in-out infinite;
+        }
+        
+        @keyframes subtle-float {
+            0%, 100% { background-position: center center; }
+            50% { background-position: center 10px; }
+        }
+        
+        .palm-leaf-icon {
+            background: linear-gradient(45deg, #D4AF37, #B8941F);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        .stats-counter {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--gold);
+        }
+        
+        .volunteer-card {
+            background: rgba(246, 232, 195, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .volunteer-card:hover {
+            background: rgba(246, 232, 195, 0.95);
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="scroll-smooth heritage-bg manuscript-texture">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-yellow-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="text-2xl palm-leaf-icon">🏛️</div>
+                    <span class="text-xl font-bold text-amber-900" style="font-family: 'Playfair Display', serif;">Project MAHEŚA</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-amber-800 hover:text-amber-600 font-medium transition-colors">Home</a>
+                    <a href="#about" class="text-amber-800 hover:text-amber-600 font-medium transition-colors">About</a>
+                    <a href="#agamas" class="text-amber-800 hover:text-amber-600 font-medium transition-colors">Āgamas</a>
+                    <a href="#volunteer" class="text-amber-800 hover:text-amber-600 font-medium transition-colors">Volunteer</a>
+                    <a href="#donate" class="text-amber-800 hover:text-amber-600 font-medium transition-colors">Donate</a>
+                    <a href="#contact" class="text-amber-800 hover:text-amber-600 font-medium transition-colors">Contact</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-amber-800 text-2xl">
+                    📜
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden fixed top-16 left-0 w-full h-screen bg-white/95 backdrop-blur-md">
+            <div class="px-4 py-6 space-y-4">
+                <a href="#home" class="block text-amber-800 hover:text-amber-600 font-medium py-2 transition-colors">Home</a>
+                <a href="#about" class="block text-amber-800 hover:text-amber-600 font-medium py-2 transition-colors">About</a>
+                <a href="#agamas" class="block text-amber-800 hover:text-amber-600 font-medium py-2 transition-colors">Āgamas</a>
+                <a href="#volunteer" class="block text-amber-800 hover:text-amber-600 font-medium py-2 transition-colors">Volunteer</a>
+                <a href="#donate" class="block text-amber-800 hover:text-amber-600 font-medium py-2 transition-colors">Donate</a>
+                <a href="#contact" class="block text-amber-800 hover:text-amber-600 font-medium py-2 transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center hero-video-bg relative">
+        <div class="text-center text-white px-4 max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 fade-in" style="font-family: 'Playfair Display', serif;">
+                Project MAHEŚA
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 fade-in opacity-90" style="font-family: 'Inter', sans-serif;">
+                Preserving Ancient Knowledge. Empowering Future Generations.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in">
+                <button onclick="scrollToSection('about')" class="bg-yellow-600 hover:bg-yellow-700 text-white px-8 py-3 rounded-lg font-semibold gold-glow transition-all">
+                    Know More
+                </button>
+                <button onclick="scrollToSection('volunteer')" class="border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-amber-900 px-8 py-3 rounded-lg font-semibold transition-all">
+                    Join the Mission
+                </button>
+            </div>
+        </div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute top-20 left-10 text-6xl opacity-20 animate-pulse">📜</div>
+        <div class="absolute bottom-20 right-10 text-4xl opacity-20 animate-pulse">🏛️</div>
+        <div class="absolute top-1/2 left-20 text-3xl opacity-20 animate-pulse">✨</div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold text-amber-900 mb-6" style="font-family: 'Playfair Display', serif;">
+                    About Project MAHEŚA
+                </h2>
+                <p class="text-lg text-amber-800 max-w-3xl mx-auto">
+                    A comprehensive 5-year initiative to digitize, research, and publish 2,500 ancient manuscripts, 
+                    preserving invaluable knowledge for future generations.
+                </p>
+            </div>
+            
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+                <div class="text-center fade-in">
+                    <div class="text-4xl mb-2">📚</div>
+                    <div class="stats-counter text-3xl mb-2">2,500</div>
+                    <div class="text-amber-800 font-medium">Manuscripts</div>
+                </div>
+                <div class="text-center fade-in">
+                    <div class="text-4xl mb-2">👨‍🏫</div>
+                    <div class="stats-counter text-3xl mb-2">25</div>
+                    <div class="text-amber-800 font-medium">Researchers</div>
+                </div>
+                <div class="text-center fade-in">
+                    <div class="text-4xl mb-2">🕰️</div>
+                    <div class="stats-counter text-3xl mb-2">1,87,500</div>
+                    <div class="text-amber-800 font-medium">Verses</div>
+                </div>
+                <div class="text-center fade-in">
+                    <div class="text-4xl mb-2">💰</div>
+                    <div class="stats-counter text-3xl mb-2">₹7.2 Cr</div>
+                    <div class="text-amber-800 font-medium">Fund Goal</div>
+                </div>
+            </div>
+            
+            <!-- Timeline -->
+            <div class="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-2xl p-8 fade-in">
+                <h3 class="text-2xl font-bold text-amber-900 mb-6 text-center" style="font-family: 'Playfair Display', serif;">
+                    5-Year Timeline
+                </h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-yellow-600 rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-4">1</div>
+                        <h4 class="font-semibold text-amber-900 mb-2">Research & Collection</h4>
+                        <p class="text-amber-700 text-sm">Identify and catalog manuscripts across India</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-yellow-600 rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-4">2</div>
+                        <h4 class="font-semibold text-amber-900 mb-2">Digitization</h4>
+                        <p class="text-amber-700 text-sm">High-resolution scanning and digital preservation</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-yellow-600 rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-4">3</div>
+                        <h4 class="font-semibold text-amber-900 mb-2">Publication</h4>
+                        <p class="text-amber-700 text-sm">Translation and global accessibility</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Āgamas Awareness Section -->
+    <section id="agamas" class="py-20 heritage-bg manuscript-texture">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold text-amber-900 mb-6" style="font-family: 'Playfair Display', serif;">
+                    Understanding Āgamas
+                </h2>
+                <p class="text-lg text-amber-800 max-w-3xl mx-auto">
+                    Āgamas are the practical manuals of Indian civilization, containing scientific and cultural wisdom 
+                    that spans architecture, metallurgy, medicine, astronomy, music, and more.
+                </p>
+            </div>
+            
+            <!-- Comparison Graphic -->
+            <div class="bg-white rounded-2xl p-8 mb-12 fade-in shadow-lg">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">📖</div>
+                        <h3 class="text-2xl font-bold text-amber-900 mb-4" style="font-family: 'Playfair Display', serif;">Vedas</h3>
+                        <p class="text-amber-800">Theoretical Foundation</p>
+                        <p class="text-sm text-amber-700 mt-2">Philosophical principles and spiritual concepts</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">🛠️</div>
+                        <h3 class="text-2xl font-bold text-amber-900 mb-4" style="font-family: 'Playfair Display', serif;">Āgamas</h3>
+                        <p class="text-amber-800">Practical Application</p>
+                        <p class="text-sm text-amber-700 mt-2">Step-by-step implementation and techniques</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Knowledge Areas -->
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 fade-in volunteer-card">
+                    <div class="text-4xl mb-4 text-center">🏛️</div>
+                    <h4 class="text-xl font-semibold text-amber-900 mb-3 text-center">Architecture</h4>
+                    <p class="text-amber-700 text-sm text-center">Temple construction, urban planning, and sacred geometry</p>
+                </div>
+                <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 fade-in volunteer-card">
+                    <div class="text-4xl mb-4 text-center">⚗️</div>
+                    <h4 class="text-xl font-semibold text-amber-900 mb-3 text-center">Sciences</h4>
+                    <p class="text-amber-700 text-sm text-center">Metallurgy, medicine, astronomy, and mathematics</p>
+                </div>
+                <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 fade-in volunteer-card">
+                    <div class="text-4xl mb-4 text-center">🎵</div>
+                    <h4 class="text-xl font-semibold text-amber-900 mb-3 text-center">Arts</h4>
+                    <p class="text-amber-700 text-sm text-center">Music, dance, sculpture, and cultural practices</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Volunteer Section -->
+    <section id="volunteer" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold text-amber-900 mb-6" style="font-family: 'Playfair Display', serif;">
+                    Join Hands with Prachara Seva Foundation
+                </h2>
+                <p class="text-lg text-amber-800 max-w-3xl mx-auto">
+                    Be part of this historic mission to preserve and share ancient Indian knowledge with the world.
+                </p>
+            </div>
+            
+            <!-- Volunteer Roles -->
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="volunteer-card rounded-xl p-6 fade-in">
+                    <div class="text-4xl mb-4 text-center">🔍</div>
+                    <h4 class="text-xl font-semibold text-amber-900 mb-3 text-center">Research</h4>
+                    <p class="text-amber-700 text-sm text-center mb-4">Help identify, catalog, and analyze ancient manuscripts</p>
+                    <ul class="text-xs text-amber-600 space-y-1">
+                        <li>✓ Manuscript identification</li>
+                        <li>✓ Content analysis</li>
+                        <li>✓ Historical research</li>
+                    </ul>
+                </div>
+                <div class="volunteer-card rounded-xl p-6 fade-in">
+                    <div class="text-4xl mb-4 text-center">📢</div>
+                    <h4 class="text-xl font-semibold text-amber-900 mb-3 text-center">Awareness</h4>
+                    <p class="text-amber-700 text-sm text-center mb-4">Spread knowledge about Āgamas and their importance</p>
+                    <ul class="text-xs text-amber-600 space-y-1">
+                        <li>✓ Social media campaigns</li>
+                        <li>✓ Educational content</li>
+                        <li>✓ Community outreach</li>
+                    </ul>
+                </div>
+                <div class="volunteer-card rounded-xl p-6 fade-in">
+                    <div class="text-4xl mb-4 text-center">🎪</div>
+                    <h4 class="text-xl font-semibold text-amber-900 mb-3 text-center">Events</h4>
+                    <p class="text-amber-700 text-sm text-center mb-4">Organize workshops, seminars, and cultural programs</p>
+                    <ul class="text-xs text-amber-600 space-y-1">
+                        <li>✓ Workshop coordination</li>
+                        <li>✓ Event management</li>
+                        <li>✓ Cultural programs</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Benefits -->
+            <div class="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-2xl p-8 mb-12 fade-in">
+                <h3 class="text-2xl font-bold text-amber-900 mb-6 text-center" style="font-family: 'Playfair Display', serif;">
+                    Volunteer Benefits
+                </h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🏆</div>
+                        <h4 class="font-semibold text-amber-900 mb-2">Certification</h4>
+                        <p class="text-amber-700 text-sm">Official recognition for your contribution</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🌟</div>
+                        <h4 class="font-semibold text-amber-900 mb-2">Recognition</h4>
+                        <p class="text-amber-700 text-sm">Public acknowledgment of your efforts</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🏛️</div>
+                        <h4 class="font-semibold text-amber-900 mb-2">Heritage Exposure</h4>
+                        <p class="text-amber-700 text-sm">Deep dive into ancient Indian knowledge</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Volunteer Form -->
+            <div class="bg-white rounded-2xl p-8 shadow-lg fade-in">
+                <h3 class="text-2xl font-bold text-amber-900 mb-6 text-center" style="font-family: 'Playfair Display', serif;">
+                    Volunteer Registration
+                </h3>
+                <form id="volunteer-form" class="max-w-md mx-auto space-y-4">
+                    <div>
+                        <label class="block text-amber-800 font-medium mb-2">Full Name</label>
+                        <input type="text" class="w-full px-4 py-2 border border-yellow-200 rounded-lg focus:outline-none focus:border-yellow-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-amber-800 font-medium mb-2">Email</label>
+                        <input type="email" class="w-full px-4 py-2 border border-yellow-200 rounded-lg focus:outline-none focus:border-yellow-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-amber-800 font-medium mb-2">Mobile</label>
+                        <input type="tel" class="w-full px-4 py-2 border border-yellow-200 rounded-lg focus:outline-none focus:border-yellow-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-amber-800 font-medium mb-2">Interest Area</label>
+                        <select class="w-full px-4 py-2 border border-yellow-200 rounded-lg focus:outline-none focus:border-yellow-500" required>
+                            <option value="">Select your interest</option>
+                            <option value="research">Research</option>
+                            <option value="awareness">Awareness</option>
+                            <option value="events">Events</option>
+                            <option value="multiple">Multiple Areas</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-3 rounded-lg font-semibold gold-glow transition-all">
+                        Join as Volunteer
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donate Section -->
+    <section id="donate" class="py-20 heritage-bg manuscript-texture">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold text-amber-900 mb-6" style="font-family: 'Playfair Display', serif;">
+                    Your Support Builds the Future of Knowledge
+                </h2>
+                <p class="text-lg text-amber-800 max-w-3xl mx-auto">
+                    Every contribution helps preserve invaluable ancient wisdom for future generations.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Benefits -->
+                <div class="fade-in">
+                    <h3 class="text-2xl font-bold text-amber-900 mb-6" style="font-family: 'Playfair Display', serif;">
+                        Donation Benefits
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="text-2xl">💰</div>
+                            <div>
+                                <h4 class="font-semibold text-amber-900">80G Tax Exemption</h4>
+                                <p class="text-amber-700 text-sm">Get tax benefits under Section 80G</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="text-2xl">🏛️</div>
+                            <div>
+                                <h4 class="font-semibold text-amber-900">Cultural Preservation</h4>
+                                <p class="text-amber-700 text-sm">Contribute to preserving ancient knowledge</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="text-2xl">🏆</div>
+                            <div>
+                                <h4 class="font-semibold text-amber-900">Recognition</h4>
+                                <p class="text-amber-700 text-sm">Special acknowledgment for major donors</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Donation Card -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg fade-in">
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-bold text-amber-900 mb-4" style="font-family: 'Playfair Display', serif;">
+                            Fund Summary
+                        </h3>
+                        <div class="stats-counter text-4xl mb-2">₹7.2 Crores</div>
+                        <p class="text-amber-700">Total Goal by 2030</p>
+                    </div>
+                    
+                    <!-- QR Code Placeholder -->
+                    <div class="bg-gray-100 rounded-lg p-8 mb-6 text-center">
+                        <div class="text-6xl mb-4">📱</div>
+                        <p class="text-amber-800 font-medium">Scan QR Code to Donate</p>
+                        <p class="text-amber-600 text-sm mt-2">UPI, Bank Transfer, Online Payment</p>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <button class="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-3 rounded-lg font-semibold gold-glow transition-all">
+                            Donate Now
+                        </button>
+                        <button class="w-full border-2 border-yellow-600 text-yellow-600 hover:bg-yellow-600 hover:text-white py-3 rounded-lg font-semibold transition-all">
+                            Monthly Contribution
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-amber-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="border-t border-yellow-600 pt-8">
+                <div class="text-center">
+                    <div class="flex items-center justify-center space-x-3 mb-4">
+                        <div class="text-2xl">🏛️</div>
+                        <span class="text-xl font-bold" style="font-family: 'Playfair Display', serif;">Project MAHEŚA</span>
+                    </div>
+                    <p class="text-yellow-200 mb-4">
+                        © 2025 Project MAHEŚA | Powered by Prachara Seva Foundation | Thiruvannamalai
+                    </p>
+                    <p class="text-yellow-300 text-sm mb-6">
+                        Website Powered by <a href="https://tensketch.com" target="_blank" rel="noopener noreferrer" class="text-yellow-100 hover:text-white font-medium transition-colors">TenSketch</a>
+                    </p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-yellow-300 mb-6">
+                        <a href="#" class="hover:text-yellow-100 transition-colors text-center">📄 Brochure View</a>
+                        <a href="#" class="hover:text-yellow-100 transition-colors text-center">📖 Booklet View</a>
+                        <a href="#" class="hover:text-yellow-100 transition-colors text-center">📧 Newsletter</a>
+                        <a href="#" class="hover:text-yellow-100 transition-colors text-center">📱 Mobile App</a>
+                    </div>
+                    <div class="flex justify-center space-x-6 text-sm text-yellow-300">
+                        <a href="#" class="hover:text-yellow-100 transition-colors">Privacy Policy</a>
+                        <a href="#" class="hover:text-yellow-100 transition-colors">Terms of Service</a>
+                        <a href="#" class="hover:text-yellow-100 transition-colors">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+        
+        // Close mobile menu when clicking on links
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
+        });
+        
+        // Smooth scroll function
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+        
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Volunteer form submission
+        document.getElementById('volunteer-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your interest! We will contact you soon with more details about volunteering opportunities.');
+        });
+        
+        // Add click handlers for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                scrollToSection(targetId);
+            });
+        });
+        
+        // Initialize fade-in animations for hero section
+        setTimeout(() => {
+            document.querySelectorAll('#home .fade-in').forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('visible');
+                }, index * 200);
+            });
+        }, 500);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'989cf381c22f7e72',t:'MTc1OTY2NzY0Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
