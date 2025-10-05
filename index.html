@@ -55,11 +55,47 @@
         }
         
         .hero-video-bg {
+            position: relative; /* allow absolutely positioned video inside */
+            overflow: hidden;
             background: linear-gradient(rgba(62, 44, 0, 0.7), rgba(62, 44, 0, 0.5)),
                         url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="manuscript" patternUnits="userSpaceOnUse" width="100" height="100"><rect width="100" height="100" fill="%23F6E8C3"/><path d="M10,10 Q50,30 90,10 Q50,50 10,90 Q30,50 10,10" fill="none" stroke="%23D4AF37" stroke-width="0.5" opacity="0.3"/></pattern></defs><rect width="1200" height="800" fill="url(%23manuscript)"/><g opacity="0.1"><circle cx="200" cy="150" r="80" fill="%23D4AF37"/><circle cx="800" cy="300" r="60" fill="%23D4AF37"/><circle cx="400" cy="600" r="100" fill="%23D4AF37"/></g></svg>');
             background-size: cover;
             background-position: center;
             animation: subtle-float 20s ease-in-out infinite;
+        }
+
+        /* Video element styles for the standalone video section */
+        .video-frame {
+            max-width: 1200px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        .hero-video {
+            display: block;
+            width: 100%;
+            height: 56vh; /* adjust height as desired */
+            min-height: 240px;
+            object-fit: contain; /* fit inside the padded frame */
+            background: black;
+            z-index: 0;
+            filter: brightness(0.9) saturate(0.98);
+        }
+
+        /* Optional overlay (ensures text readability) for standalone video */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(62,44,0,0.15), rgba(62,44,0,0.15));
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Mobile: show the video on small screens (no play overlay) */
+        .mobile-play-overlay { display: none; }
+        @media (max-width: 767px) {
+            .hero-video { display: block; }
+            .mobile-play-overlay { display: none; }
         }
         
         @keyframes subtle-float {
@@ -75,7 +111,7 @@
         }
         
         .mobile-menu {
-            transform: translateX(-100%);
+            transform: translateX(100%);
             transition: transform 0.3s ease;
         }
         
@@ -132,8 +168,8 @@
         </div>
         
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="mobile-menu md:hidden fixed top-16 left-0 w-full h-screen bg-white/95 backdrop-blur-md">
-            <div class="px-4 py-6 space-y-4">
+        <div id="mobile-menu" class="mobile-menu md:hidden fixed top-16 right-0 w-full h-screen bg-white/95 backdrop-blur-md">
+            <div class="py-6 space-y-4 text-right pr-10">
                 <a href="#home" class="block text-amber-800 hover:text-amber-600 font-medium py-2 transition-colors">Home</a>
                 <a href="#about" class="block text-amber-800 hover:text-amber-600 font-medium py-2 transition-colors">About</a>
                 <a href="#agamas" class="block text-amber-800 hover:text-amber-600 font-medium py-2 transition-colors">Āgamas</a>
@@ -141,12 +177,13 @@
                 <a href="#donate" class="block text-amber-800 hover:text-amber-600 font-medium py-2 transition-colors">Donate</a>
                 <a href="#contact" class="block text-amber-800 hover:text-amber-600 font-medium py-2 transition-colors">Contact</a>
             </div>
-        </div>
+        </div>  
     </nav>
 
     <!-- Hero Section -->
     <section id="home" class="min-h-screen flex items-center justify-center hero-video-bg relative">
-        <div class="text-center text-white px-4 max-w-4xl mx-auto">
+        <!-- Background video: replace src with your video file (mp4/webm) or remote URL -->
+    <div class="text-center text-white px-4 max-w-4xl mx-auto relative z-10">
             <h1 class="text-5xl md:text-7xl font-bold mb-6 fade-in" style="font-family: 'Playfair Display', serif;">
                 Project MAHEŚA
             </h1>
@@ -169,6 +206,18 @@
         <div class="absolute top-1/2 left-20 text-3xl opacity-20 animate-pulse">✨</div>
     </section>
 
+    <!-- Standalone background video section (placed after hero) -->
+        <section id="hero-video-section" class="w-full relative overflow-hidden bg-white/95">
+            <div class="video-frame px-6 md:px-12 py-8 md:py-12">
+                <video class="hero-video rounded-2xl shadow-lg" muted loop playsinline controls preload="metadata" poster="/path/to/poster.jpg" controlsList="nodownload nofullscreen">
+                    <source src="/assets/video/bgvideo.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="hero-overlay" aria-hidden="true"></div>
+
+            <!-- mobile overlay removed: video displays directly on all devices -->
+        </section>
+
     <!-- About Section -->
     <section id="about" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -176,6 +225,9 @@
                 <h2 class="text-4xl md:text-5xl font-bold text-amber-900 mb-6" style="font-family: 'Playfair Display', serif;">
                     About Project MAHEŚA
                 </h2>
+                <div class="p-6">
+                    <img class="rounded-2xl" src="/assets/img/about.jpg" alt="aboutsectionimg">
+                </div>
                 <p class="text-lg text-amber-800 max-w-3xl mx-auto">
                     A comprehensive 5-year initiative to digitize, research, and publish 2,500 ancient manuscripts, 
                     preserving invaluable knowledge for future generations.
@@ -462,6 +514,12 @@
             </div>
         </div>
     </section>
+    <section>
+        <div class="px-4 py-3 pb-3">
+            <img src="/assets/img/Front.png" class="rounded-2xl mb-2" alt="Brochure-front">
+            <img src="/assets/img/Back.png" class="rounded-2xl" alt="Brochure-end">
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer id="contact" class="bg-amber-900 text-white py-12">
@@ -480,7 +538,7 @@
                     </p>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-yellow-300 mb-6">
                         <a href="#" class="hover:text-yellow-100 transition-colors text-center">📄 Brochure View</a>
-                        <a href="#" class="hover:text-yellow-100 transition-colors text-center">📖 Booklet View</a>
+                        <a href="/assets/pdf/booklet.pdf" target="_blank" class="hover:text-yellow-100 transition-colors text-center">📖 Booklet View</a>
                         <a href="#" class="hover:text-yellow-100 transition-colors text-center">📧 Newsletter</a>
                         <a href="#" class="hover:text-yellow-100 transition-colors text-center">📱 Mobile App</a>
                     </div>
@@ -560,6 +618,8 @@
                 }, index * 200);
             });
         }, 500);
+
+        
     </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'989cf381c22f7e72',t:'MTc1OTY2NzY0Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
